@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f7f2ea;
+  --color-paper-2: #efe7db;
+  --color-marble: #e4dbcd;
+  --color-ink: #211913;
+  --color-ink-2: #5b4c40;
+  --color-ink-3: #8a7a6c;
+  --color-cup: #c41e2b;
+  --color-cup-deep: #9c1621;
+  --color-navy: #1d2a4a;
+  --color-crema: #c98a4b;
+
+  --font-display: var(--font-bodoni), "Bodoni 72", Didot, serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-italianno), cursive;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--color-ink-3) var(--color-paper);
+}
+
+body {
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-cup);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cup);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .script {
+    font-family: var(--font-script);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  /* the hairline every list and table in the shop is ruled with */
+  .rule {
+    border-color: color-mix(in oklab, var(--color-ink) 14%, transparent);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.85rem 1.4rem;
+    font-weight: 600;
+    font-size: 15px;
+    transition:
+      background-color 0.25s var(--ease-out-quart),
+      color 0.25s var(--ease-out-quart),
+      transform 0.25s var(--ease-out-quart),
+      box-shadow 0.25s var(--ease-out-quart);
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-cup {
+    background: var(--color-cup);
+    color: #fff;
+    box-shadow: 0 8px 24px -10px rgb(156 22 33 / 0.6);
+  }
+  .btn-cup:hover {
+    background: var(--color-cup-deep);
+  }
+  .btn-paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .btn-paper:hover {
+    background: #fff;
+  }
+  .btn-line {
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-ink) 30%, transparent);
+    color: var(--color-ink);
+  }
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* steam over a finished pour */
+.steam {
+  stroke-dasharray: 46;
+  stroke-dashoffset: 46;
+  animation: steam 2.8s var(--ease-out-quart) infinite;
+}
+.steam-b {
+  animation-delay: 0.5s;
+}
+.steam-c {
+  animation-delay: 1s;
+}
+@keyframes steam {
+  0% {
+    stroke-dashoffset: 46;
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -46;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .table-card {
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
