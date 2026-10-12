@@ -1,14 +1,15 @@
 # Editing the menu from Google Sheets
 
 The menu on the site (the `/menu` page, the table cards, and the lists on the home page) can come from a Google
-Sheet that the shop edits from a phone. Changes appear on the site within a few minutes (Google refreshes a
-published sheet every few minutes; the site checks it every minute).
+Sheet that the shop edits from a phone. Changes appear on the site within about half a minute (the site checks
+the sheet every 15 seconds; the first visit after a change starts the refresh, the next one shows it).
 
 ## One-time setup
 
 1. In Google Sheets: **File → Import → Upload** `menu-sheet.csv` (this folder), choose **Replace spreadsheet**.
-2. **File → Share → Publish to web**, pick the sheet, choose **Comma-separated values (.csv)**, click **Publish**,
-   and copy the link.
+2. **Share** (top right) → under General access choose **Anyone with the link**, role **Viewer** → **Copy link**.
+   (A **File → Share → Publish to web** CSV link also works, but Google only refreshes that copy every few
+   minutes.)
 3. In Vercel: the project's **Settings → Environment Variables**, add `MENU_SHEET_CSV` with that link, then
    **Redeploy** once.
 

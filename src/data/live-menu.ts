@@ -2,24 +2,35 @@ import { cacheLife } from "next/cache";
 import { composeMenu, fileMenu, fileSections, seenFlavors, type Menu, type Section } from "./menu";
 
 /**
- * The owner's menu, read from a Google Sheet published to the web as CSV (File > Share > Publish to web).
- * One row per item with the columns Section, Item, Description, Price, Sold out. Rows whose section mentions
- * "flavor" become today's gelato flavors. Edits show up within a few minutes (Google refreshes the published CSV
- * on its own schedule; this re-reads it every minute). If the sheet is missing, unreachable or unreadable, the
- * menu in menu.ts is served instead.
+ * The owner's menu, read from a Google Sheet. One row per item with the columns Section, Item, Description,
+ * Price, Sold out. Rows whose section mentions "flavor" become today's gelato flavors. MENU_SHEET_CSV holds either
+ * the sheet's normal share link ("Anyone with the link can view"), which reads the live sheet so edits show within
+ * about half a minute, or a "Publish to web" CSV link, which Google only refreshes every few minutes. The menu is
+ * re-read every 15 seconds; if the sheet is missing, unreachable or unreadable, the menu in menu.ts is served.
  */
 export async function getMenu(): Promise<Menu> {
   "use cache";
-  cacheLife("minutes");
-  const url = process.env.MENU_SHEET_CSV;
-  if (!url) return fileMenu;
+  cacheLife({ stale: 30, revalidate: 15, expire: 300 });
+  const link = process.env.MENU_SHEET_CSV;
+  if (!link) return fileMenu;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    const res = await fetch(csvUrl(link), { signal: AbortSignal.timeout(6000) });
     if (!res.ok) return fileMenu;
     return menuFromCsv(await res.text()) ?? fileMenu;
   } catch {
     return fileMenu;
   }
+}
+
+/**
+ * A share link (…/spreadsheets/d/<id>/edit…) becomes the sheet's live CSV export; a published link
+ * (…/spreadsheets/d/e/<key>/pub?output=csv) is already CSV and passes through.
+ */
+function csvUrl(link: string) {
+  const id = link.match(/docs\.google\.com\/spreadsheets\/d\/([\w-]{20,})/)?.[1];
+  if (!id) return link;
+  const gid = link.match(/[#&?]gid=(\d+)/)?.[1];
+  return `https://docs.google.com/spreadsheets/d/${id}/export?format=csv${gid ? `&gid=${gid}` : ""}`;
 }
 
 const fold = (s: string) =>
