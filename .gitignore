@@ -46,3 +46,6 @@ assets-inbox/
 .impeccable/review/
 .impeccable/decision/
 .impeccable/check.jpg
+
+# pitch materials (pricing, outreach video), kept out of the public repo
+pitch/

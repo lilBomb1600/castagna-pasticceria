@@ -7,7 +7,7 @@ import { ArrowRight, ArrowUpRight, Printer, Star } from "lucide-react";
 import { AffogatoPour } from "./AffogatoPour";
 import { Lockup } from "./Lockup";
 import { QrCode } from "./QrCode";
-import { menu, menuNote } from "@/data/menu";
+import { menuNote, type Item, type Menu } from "@/data/menu";
 import { reviews } from "@/data/reviews";
 import { clock, hours, shop, status } from "@/data/shop";
 
@@ -26,17 +26,14 @@ function Film({ src, poster, label, className }: { src: string; poster: string; 
   );
 }
 
-const pick = (id: string, names: string[]) => {
-  const s = menu.find((m) => m.id === id)!;
-  return names.map((n) => s.items.find((i) => i.name === n)!).filter(Boolean);
-};
-
-function Price({ value }: { value?: string }) {
-  return value ? <span className="tnum font-semibold text-ink">{value}</span> : <span className="text-[13px] text-ink-3">at the counter</span>;
+function Price({ item }: { item: Item }) {
+  if (item.soldOut) return <span className="text-[13px] text-ink-3">Sold out</span>;
+  return item.price ? <span className="tnum font-semibold text-ink">{item.price}</span> : <span className="text-[13px] text-ink-3">at the counter</span>;
 }
 
 /** One category of the case: names, with prices where the shop posts them and one "at the counter" line where it doesn't. */
-function CaseList({ title, body, items }: { title: string; body: string; items: { name: string; note?: string; price?: string }[] }) {
+function CaseList({ title, body, items }: { title: string; body: string; items: Item[] }) {
+  if (!items.length) return null;
   const priced = items.some((i) => i.price);
   return (
     <div>
@@ -45,11 +42,11 @@ function CaseList({ title, body, items }: { title: string; body: string; items: 
       <ul className="rule mt-4 border-t">
         {items.map((it) => (
           <li key={it.name} className="rule flex items-baseline justify-between gap-4 border-b py-2.5 text-[15.5px]">
-            <span>
+            <span className={clsx(it.soldOut && "text-ink-3 line-through decoration-ink-3/50")}>
               {it.name}
               {it.note && <span className="text-ink-3"> · {it.note}</span>}
             </span>
-            {it.price && <span className="tnum font-semibold">{it.price}</span>}
+            {it.soldOut ? <span className="shrink-0 text-[13px] text-ink-3">Sold out today</span> : it.price && <span className="tnum font-semibold">{it.price}</span>}
           </li>
         ))}
       </ul>
@@ -58,8 +55,8 @@ function CaseList({ title, body, items }: { title: string; body: string; items: 
   );
 }
 
-export function TheCase() {
-  const sec = (id: string) => menu.find((m) => m.id === id)!;
+export function TheCase({ menu }: { menu: Menu }) {
+  const items = (id: string) => menu.sections.find((m) => m.id === id)?.items ?? [];
   return (
     <section id="case" className="px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
       <div className="mx-auto max-w-[1320px]">
@@ -82,9 +79,9 @@ export function TheCase() {
               It changes every day. Like a small caf&eacute; in Europe, you choose from what came out of the oven that morning.
             </p>
             <div className="mt-10 space-y-10">
-              <CaseList title="Pasticceria" body="Baked in the back, almost in front of you." items={sec("pasticceria").items} />
-              <CaseList title="Caffè" body="Pulled at the bar and carried to your table, inside or out on the plaza." items={sec("caffe").items.slice(0, 4)} />
-              <CaseList title="Panini & bread" body="Lunch from the same oven, and a loaf to take home." items={[...sec("salato").items, ...sec("pane").items.slice(0, 1)]} />
+              <CaseList title="Pasticceria" body="Baked in the back, almost in front of you." items={items("pasticceria")} />
+              <CaseList title="Caffè" body="Pulled at the bar and carried to your table, inside or out on the plaza." items={items("caffe").slice(0, 4)} />
+              <CaseList title="Panini & bread" body="Lunch from the same oven, and a loaf to take home." items={[...items("salato"), ...items("pane").slice(0, 1)]} />
             </div>
           </div>
         </div>
@@ -107,10 +104,8 @@ export function TheCase() {
   );
 }
 
-const FLAVORS = ["Hazelnut", "Vanilla", "Belgian chocolate", "Salted caramel", "Tiramisu", "Sour cherry", "Ricotta", "Cassis", "Spumoni"];
-
-export function Gelato() {
-  const sizes = menu.find((m) => m.id === "gelato")!.items;
+export function Gelato({ menu }: { menu: Menu }) {
+  const sizes = menu.sections.find((m) => m.id === "gelato")?.items ?? [];
   return (
     <section id="gelato" className="bg-paper-2 px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
       <div className="mx-auto max-w-[1320px]">
@@ -120,13 +115,15 @@ export function Gelato() {
               Gelato, <em className="font-normal italic">a taste first.</em>
             </h2>
             <p className="mt-5 max-w-[48ch] text-[17px] leading-relaxed text-ink-2">
-              Ask to try a flavor or two before you choose. These have all been in the case; today&apos;s are behind the glass.
+              {menu.today
+                ? "Ask to try a flavor or two before you choose. Here's what's in the case today."
+                : "Ask to try a flavor or two before you choose. These have all been in the case; today's are behind the glass."}
             </p>
             <div className="mt-10 aspect-[4/3] overflow-hidden rounded-[3px] bg-paper">
               <Film src="/film/gelato.mp4" poster="/film/gelato.jpg" label="A spatola folding gelato in Castagna's display case" />
             </div>
-            <ul className="mt-8 grid grid-cols-2 gap-x-8 sm:grid-cols-3" aria-label="Flavors seen in the case">
-              {FLAVORS.map((f) => (
+            <ul className="mt-8 grid grid-cols-2 gap-x-8 sm:grid-cols-3" aria-label={menu.today ? "Today's flavors" : "Flavors seen in the case"}>
+              {menu.flavors.map((f) => (
                 <li key={f} className="rule display border-b py-3 text-[22px] italic leading-tight">
                   {f}
                 </li>
@@ -135,18 +132,20 @@ export function Gelato() {
           </div>
 
           <div className="flex flex-col">
-            <div className="rounded-[6px] bg-paper p-7 sm:p-9">
-              <h3 className="display text-[30px] font-medium leading-tight">Cups</h3>
-              <ul className="rule mt-4 border-t">
-                {sizes.map((s) => (
-                  <li key={s.name} className="rule flex items-baseline justify-between border-b py-3.5 text-[16.5px]">
-                    <span>{s.name}</span>
-                    <span className="tnum font-semibold">{s.price}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 text-[13.5px] text-ink-3">Prices from the shop&apos;s own signs.</p>
-            </div>
+            {sizes.length > 0 && (
+              <div className="rounded-[6px] bg-paper p-7 sm:p-9">
+                <h3 className="display text-[30px] font-medium leading-tight">Cups</h3>
+                <ul className="rule mt-4 border-t">
+                  {sizes.map((s) => (
+                    <li key={s.name} className="rule flex items-baseline justify-between border-b py-3.5 text-[16.5px]">
+                      <span>{s.name}</span>
+                      <Price item={s} />
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-[13.5px] text-ink-3">Prices from the shop&apos;s own signs.</p>
+              </div>
+            )}
 
             <div className="mt-6 rounded-[6px] bg-paper px-7 pb-8 pt-8 sm:px-9">
               <AffogatoPour
@@ -161,8 +160,8 @@ export function Gelato() {
   );
 }
 
-export function TableQR() {
-  const preview = menu.filter((m) => ["caffe", "pasticceria"].includes(m.id));
+export function TableQR({ menu }: { menu: Menu }) {
+  const preview = menu.sections.filter((m) => ["caffe", "pasticceria"].includes(m.id));
   return (
     <section id="table" className="relative overflow-hidden bg-ink px-5 py-24 text-paper sm:px-8 lg:px-12 lg:py-32">
       <div className="mx-auto grid max-w-[1320px] items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
@@ -175,7 +174,7 @@ export function TableQR() {
                 <span className="rounded-full bg-cup px-3 py-1 text-[11px] font-semibold text-white">Table menu</span>
               </div>
               <div className="flex gap-2 overflow-hidden px-5 pb-3">
-                {menu.slice(0, 4).map((m, i) => (
+                {menu.sections.slice(0, 4).map((m, i) => (
                   <span key={m.id} className={clsx("shrink-0 rounded-full px-3 py-1.5 text-[12px] font-semibold", i === 0 ? "bg-ink text-paper" : "bg-paper-2 text-ink-2")}>
                     {m.title}
                   </span>
@@ -189,7 +188,7 @@ export function TableQR() {
                       {sec.items.slice(0, 4).map((it) => (
                         <li key={it.name} className="rule flex items-baseline justify-between border-b py-2 text-[13.5px]">
                           <span>{it.name}</span>
-                          <Price value={it.price} />
+                          <Price item={it} />
                         </li>
                       ))}
                     </ul>
@@ -218,11 +217,11 @@ export function TableQR() {
             </div>
             <div className="rounded-[6px] bg-cup p-6 text-white">
               <div className="rounded-[3px] bg-paper p-4">
-                <QrCode href={shop.review} label="QR code to review Castagna on Yelp" className="mx-auto w-[min(148px,100%)]" />
+                <QrCode href={shop.review} label="QR code to review Castagna on Google" className="mx-auto w-[min(148px,100%)]" />
               </div>
               <p className="display mt-5 text-[24px] italic leading-none">Loved it?</p>
               <a href={shop.review} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-[15px] font-semibold text-white hover:underline">
-                Leave a Yelp review <ArrowUpRight size={16} />
+                Leave a Google review <ArrowUpRight size={16} />
               </a>
             </div>
           </div>
@@ -341,7 +340,7 @@ export function Footer() {
               Menu
             </Link>
             <a href={shop.review} target="_blank" rel="noopener noreferrer" className="btn bg-white/10 text-paper ring-1 ring-white/20 hover:bg-white/20">
-              Review us on Yelp
+              Review us on Google
             </a>
           </div>
         </div>

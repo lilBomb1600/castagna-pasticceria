@@ -11,7 +11,14 @@ export const shop = {
   oneLine: "3531 Plaza Way, Lafayette, CA 94549",
   directions: "https://www.google.com/maps/dir/?api=1&destination=3531+Plaza+Way+Lafayette+CA+94549",
   yelp: "https://www.yelp.com/biz/castagna-pasticceria-lafayette",
-  review: "https://www.yelp.com/writeareview/biz/UQmPkSxEbMG9AJ-aWmnOVQ",
+  /** Google's own listing for 3531 Plaza Way (place ID from Google's Place ID Finder, October 2026). */
+  placeId: "ChIJp3CGVgBjhYARcJMSVq8rqPo",
+  maps: "https://www.google.com/maps/search/?api=1&query=Castagna%20Pasticceria&query_place_id=ChIJp3CGVgBjhYARcJMSVq8rqPo",
+  /**
+   * The table cards ask for Google reviews: Google allows a business to ask (without incentives), while Yelp asks
+   * businesses not to solicit reviews and tends to filter the ones that were.
+   */
+  review: "https://search.google.com/local/writereview?placeid=ChIJp3CGVgBjhYARcJMSVq8rqPo",
   rating: { stars: 4.6, count: 13, checked: "October 2026" },
   amenities: ["Validated parking", "Dogs welcome", "Patio and indoor seating", "We bring your order to your table"],
 };

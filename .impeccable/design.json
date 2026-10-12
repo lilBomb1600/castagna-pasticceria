@@ -1,0 +1,355 @@
+{
+ "schemaVersion": 2,
+ "generatedAt": "2026-10-12T05:36:19+00:00",
+ "title": "Design System: Castagna Pasticceria",
+ "extensions": {
+  "colorMeta": {
+   "cup": {
+    "role": "primary",
+    "displayName": "Cup Red",
+    "canonical": "oklch(52.9% 0.198 24.3)",
+    "tonalRamp": [
+     "#300000",
+     "#590000",
+     "#860000",
+     "#b3001c",
+     "#de3c40",
+     "#ff6e6a",
+     "#ff9f98",
+     "#ffcbc3"
+    ]
+   },
+   "cup-deep": {
+    "role": "primary",
+    "displayName": "Deep Cup",
+    "canonical": "oklch(44.7% 0.167 24.1)",
+    "tonalRamp": [
+     "#2c0000",
+     "#530000",
+     "#7e0010",
+     "#a7242a",
+     "#d14e4d",
+     "#f77974",
+     "#ffa7a0",
+     "#ffd1c9"
+    ]
+   },
+   "crema": {
+    "role": "tertiary",
+    "displayName": "Crema",
+    "canonical": "oklch(68.4% 0.111 64.1)",
+    "tonalRamp": [
+     "#200000",
+     "#411400",
+     "#652f00",
+     "#884d00",
+     "#ae7130",
+     "#d59557",
+     "#f7be88",
+     "#ffe4b5"
+    ]
+   },
+   "paper": {
+    "role": "neutral",
+    "displayName": "Menu Paper",
+    "canonical": "oklch(96.3% 0.012 79.8)",
+    "tonalRamp": [
+     "#0e0b06",
+     "#27231e",
+     "#433f39",
+     "#615d56",
+     "#848078",
+     "#a9a49c",
+     "#cfcac2",
+     "#f3eee6"
+    ]
+   },
+   "paper-2": {
+    "role": "neutral",
+    "displayName": "Counter Paper",
+    "canonical": "oklch(93.1% 0.018 78.2)",
+    "tonalRamp": [
+     "#0f0a04",
+     "#29231a",
+     "#453f35",
+     "#635d52",
+     "#867f74",
+     "#aba398",
+     "#d1c9be",
+     "#f5ede1"
+    ]
+   },
+   "window-white": {
+    "role": "neutral",
+    "displayName": "Window White",
+    "canonical": "oklch(97.7% 0.010 81.8)",
+    "tonalRamp": [
+     "#0d0b07",
+     "#26241f",
+     "#423f3a",
+     "#605d57",
+     "#838079",
+     "#a8a49e",
+     "#cecac3",
+     "#f2eee7"
+    ]
+   },
+   "white": {
+    "role": "neutral",
+    "displayName": "White",
+    "canonical": "oklch(100.0% 0.000 89.9)",
+    "tonalRamp": [
+     "#0b0b0b",
+     "#242424",
+     "#404040",
+     "#5d5d5d",
+     "#808080",
+     "#a4a4a4",
+     "#cacaca",
+     "#eeeeee"
+    ]
+   },
+   "ink": {
+    "role": "neutral",
+    "displayName": "Espresso Ink",
+    "canonical": "oklch(22.1% 0.017 58.6)",
+    "tonalRamp": [
+     "#110905",
+     "#2a221c",
+     "#473e37",
+     "#655b54",
+     "#887e76",
+     "#ada29a",
+     "#d3c8c0",
+     "#f8ece4"
+    ]
+   },
+   "ink-2": {
+    "role": "neutral",
+    "displayName": "Roast",
+    "canonical": "oklch(42.8% 0.028 60.6)",
+    "tonalRamp": [
+     "#140802",
+     "#2e2116",
+     "#4b3d31",
+     "#6a5a4e",
+     "#8d7d70",
+     "#b2a193",
+     "#d9c7b9",
+     "#fdebdc"
+    ]
+   },
+   "ink-3": {
+    "role": "neutral",
+    "displayName": "Steamed",
+    "canonical": "oklch(59.0% 0.029 63.4)",
+    "tonalRamp": [
+     "#130801",
+     "#2e2115",
+     "#4b3d30",
+     "#6a5a4d",
+     "#8d7d6f",
+     "#b2a192",
+     "#d9c7b8",
+     "#fdebdb"
+    ]
+   }
+  },
+  "typographyMeta": {
+   "hero": {
+    "displayName": "Hero",
+    "purpose": "The opening headline over the film, capped at 16ch."
+   },
+   "display": {
+    "displayName": "Display",
+    "purpose": "Section headings that turn italic for their second half."
+   },
+   "title": {
+    "displayName": "Title",
+    "purpose": "List group and card titles, set italic."
+   },
+   "quote": {
+    "displayName": "Quote",
+    "purpose": "Review quotes and flavor names, in Bodoni."
+   },
+   "body": {
+    "displayName": "Body",
+    "purpose": "Section intros, 44 to 48ch."
+   },
+   "ui": {
+    "displayName": "UI",
+    "purpose": "Chips and nav links."
+   },
+   "caption": {
+    "displayName": "Caption",
+    "purpose": "Photo captions and section notes."
+   },
+   "list": {
+    "displayName": "List",
+    "purpose": "Menu items with tabular prices."
+   },
+   "label": {
+    "displayName": "Label",
+    "purpose": "Captions, notes, 'at the counter'."
+   },
+   "script": {
+    "displayName": "Script",
+    "purpose": "'Pasticceria' in the lockup only."
+   }
+  },
+  "shadows": [
+   {
+    "name": "cup-glow",
+    "value": "0 8px 24px -10px rgb(156 22 33 / 0.6)",
+    "purpose": "Under the red button only."
+   },
+   {
+    "name": "sheet-lift",
+    "value": "0 -20px 40px -20px rgb(0 0 0 / 0.5)",
+    "purpose": "Top edge of the phone menu sheet."
+   },
+   {
+    "name": "device-drop",
+    "value": "0 40px 80px -30px rgb(0 0 0 / 0.8)",
+    "purpose": "The phone mockup on the dark table section."
+   }
+  ],
+  "motion": [
+   {
+    "name": "ease-out-expo",
+    "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "purpose": "Hero reveal (1200ms) and loader lift (900ms)."
+   },
+   {
+    "name": "ease-out-quart",
+    "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+    "purpose": "Button, nav and link state transitions (250 to 500ms)."
+   },
+   {
+    "name": "sheet-spring",
+    "value": "spring(stiffness 140, damping 22, mass 0.9)",
+    "purpose": "The phone menu sheet rising over its photo."
+   }
+  ],
+  "breakpoints": [
+   {
+    "name": "sm",
+    "value": "640px"
+   },
+   {
+    "name": "md",
+    "value": "768px"
+   },
+   {
+    "name": "lg",
+    "value": "1024px"
+   },
+   {
+    "name": "tall",
+    "value": "(max-aspect-ratio: 4/5)"
+   }
+  ]
+ },
+ "components": [
+  {
+   "name": "Cup Button",
+   "kind": "button",
+   "refersTo": "button-cup",
+   "description": "The one primary action in a view: See today's menu, Get directions.",
+   "html": "<button class=\"ds-btn-cup\">See today's menu <svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+   "css": ".ds-btn-cup{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:13.6px 22.4px;font:600 15px/1.2 'Hanken Grotesk',system-ui,sans-serif;cursor:pointer;transition:background-color .25s cubic-bezier(.25,1,.5,1),color .25s cubic-bezier(.25,1,.5,1),transform .25s cubic-bezier(.25,1,.5,1);background:#c41e2b;color:#fff;box-shadow:0 8px 24px -10px rgb(156 22 33/.6)}.ds-btn-cup:hover{background:#9c1621}.ds-btn-cup:active{transform:scale(.97)}.ds-btn-cup:focus-visible{outline:2px solid #c41e2b;outline-offset:3px}"
+  },
+  {
+   "name": "Paper Button",
+   "kind": "button",
+   "refersTo": "button-paper",
+   "description": "Second action over film or dark grounds.",
+   "html": "<div class=\"ds-dark\"><button class=\"ds-btn-paper\">Plan a visit</button></div>",
+   "css": ".ds-dark{background:#211913;padding:20px;display:inline-block;border-radius:6px}.ds-btn-paper{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:13.6px 22.4px;font:600 15px/1.2 'Hanken Grotesk',system-ui,sans-serif;cursor:pointer;transition:background-color .25s cubic-bezier(.25,1,.5,1),color .25s cubic-bezier(.25,1,.5,1),transform .25s cubic-bezier(.25,1,.5,1);background:#f7f2ea;color:#211913}.ds-btn-paper:hover{background:#fff}.ds-btn-paper:active{transform:scale(.97)}.ds-btn-paper:focus-visible{outline:2px solid #c41e2b;outline-offset:3px}"
+  },
+  {
+   "name": "Line Button",
+   "kind": "button",
+   "refersTo": "button-line",
+   "description": "Quiet secondary action on paper: Read them all on Yelp, See the menu.",
+   "html": "<button class=\"ds-btn-line\">See the menu</button>",
+   "css": ".ds-btn-line{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:13.6px 22.4px;font:600 15px/1.2 'Hanken Grotesk',system-ui,sans-serif;cursor:pointer;transition:background-color .25s cubic-bezier(.25,1,.5,1),color .25s cubic-bezier(.25,1,.5,1),transform .25s cubic-bezier(.25,1,.5,1);background:transparent;color:#211913;box-shadow:inset 0 0 0 1px color-mix(in oklab,#211913 30%,transparent)}.ds-btn-line:hover{background:#211913;color:#f7f2ea}.ds-btn-line:active{transform:scale(.97)}.ds-btn-line:focus-visible{outline:2px solid #c41e2b;outline-offset:3px}"
+  },
+  {
+   "name": "Menu Chips",
+   "kind": "chip",
+   "refersTo": "chip",
+   "description": "Pinned category chips on the phone menu; the active one follows the reading position.",
+   "html": "<div class=\"ds-chips\"><button class=\"ds-chip\">Caffè</button><button class=\"ds-chip ds-chip-on\" aria-current=\"true\">Gelato</button><button class=\"ds-chip\">Pasticceria</button></div>",
+   "css": ".ds-chips{display:flex;gap:8px}.ds-chip{border:none;border-radius:999px;padding:8px 16px;font:600 14.5px/1.2 'Hanken Grotesk',system-ui,sans-serif;background:#efe7db;color:#5b4c40;cursor:pointer;transition:background-color .2s,color .2s}.ds-chip:hover{color:#211913}.ds-chip-on{background:#211913;color:#f7f2ea}.ds-chip:focus-visible{outline:2px solid #c41e2b;outline-offset:3px}"
+  },
+  {
+   "name": "Ruled Menu List",
+   "kind": "custom",
+   "refersTo": "card",
+   "description": "The signature list: hairline rules, tabular prices, 'at the counter' and sold-out states.",
+   "html": "<div class=\"ds-card\"><h3 class=\"ds-title\">Pasticceria</h3><ul class=\"ds-list\"><li><span>Croissant</span><b>$3.50</b></li><li><span>Bostock <i>· Hazelnut or tropical</i></span><b>$3.50</b></li><li><span>Sfogliatelle</span><em>at the counter</em></li><li class=\"ds-out\"><span>Cannoli</span><em>Sold out today</em></li></ul></div>",
+   "css": ".ds-card{background:#efe7db;border-radius:6px;padding:28px;max-width:420px;color:#211913}.ds-title{font:italic 500 30px/1 'Bodoni Moda',Didot,serif;letter-spacing:-.02em;margin:0 0 16px}.ds-list{list-style:none;margin:0;padding:0;border-top:1px solid color-mix(in oklab,#211913 14%,transparent);font:400 15.5px/1.5 'Hanken Grotesk',system-ui,sans-serif}.ds-list li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid color-mix(in oklab,#211913 14%,transparent)}.ds-list b{font-weight:600;font-variant-numeric:tabular-nums}.ds-list i{font-style:normal;color:#8a7a6c}.ds-list em{font-style:normal;font-size:13px;color:#8a7a6c}.ds-out span{color:#8a7a6c;text-decoration:line-through}"
+  },
+  {
+   "name": "Navigation",
+   "kind": "nav",
+   "refersTo": "button-cup",
+   "description": "Fixed bar; clear over the hero, settled on paper with the small lockup after the first screen.",
+   "html": "<header class=\"ds-nav\"><span class=\"ds-mark\">Castagna</span><nav><a href=\"#\">The case</a><a href=\"#\">Gelato</a><a href=\"#\">Table menu</a><a href=\"#\">Visit</a></nav><a class=\"ds-nav-cta\" href=\"#\">Menu</a></header>",
+   "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:24px;height:68px;padding:0 24px;background:rgb(247 242 234/.92);box-shadow:0 1px 0 rgb(33 25 19/.08);font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-mark{font:500 20px/1 'Bodoni Moda',serif;letter-spacing:.2em;text-transform:uppercase;color:#211913}.ds-nav nav{display:flex;gap:4px}.ds-nav nav a{padding:8px 16px;border-radius:999px;font-size:14.5px;font-weight:500;color:#5b4c40;text-decoration:none;transition:background-color .2s,color .2s}.ds-nav nav a:hover{background:#efe7db;color:#211913}.ds-nav-cta{background:#c41e2b;color:#fff;border-radius:999px;padding:10px 20px;font-weight:600;font-size:14px;text-decoration:none}.ds-nav-cta:hover{background:#9c1621}.ds-nav a:focus-visible{outline:2px solid #c41e2b;outline-offset:3px}"
+  }
+ ],
+ "narrative": {
+  "northStar": "The Case Behind the Glass",
+  "overview": "The category standard set by Blue Bottle and Tartine, executed with Castagna's own things: the food carries the page, and everything around it is warm paper, espresso-dark ink and the red of the shop's cups. The site behaves like standing at the counter. A full-bleed film of espresso poured over gelato opens it, the real pastry case with its handwritten tags comes next, then the gelato, the table card, the reviews and the way there. Nothing on the page competes with a photograph of something to eat.\n\nType does the decorating. Bodoni Moda carries every heading, with its Italian italic for the second half of a line (\"Gelato, *a taste first.*\"), and the shop's window lettering is redrawn once as the lockup: CASTAGNA set on an arc over \"Pasticceria\" in script. Lists are ruled like a printed menu with a single hairline, prices sit in tabular figures, and where the shop posts no price the line says so plainly instead of inventing one.\n\nThe density is a café menu, not a landing page: generous sections, one idea per section, long lines of real items. Motion is slow and liquid (a pour, a sheet rising, a film settling in) and always optional.",
+  "keyCharacteristics": [
+   "Warm paper ground with espresso ink; cup red is the only accent.",
+   "Bodoni Moda headings that turn italic mid-line; Hanken Grotesk for everything read.",
+   "Hairline-ruled lists with tabular prices, like the printed menu board.",
+   "Real photographs and films at nearly square corners; cards barely rounded.",
+   "Pill buttons in cup red, paper, or a hairline outline."
+  ],
+  "rules": [
+   {
+    "name": "The One Red Rule",
+    "body": "Cup red is the only accent colour. It marks the one action or status that matters in a view; two red buttons side by side means one of them is wrong.",
+    "section": "colors"
+   },
+   {
+    "name": "The Hairline Rule",
+    "body": "Every list and table is ruled with ink at 14% (`color-mix(in oklab, ink 14%, transparent)`), one line between items, never boxes around them.",
+    "section": "colors"
+   },
+   {
+    "name": "The Turn to Italic Rule",
+    "body": "A display heading is one sentence that turns italic for its second half. The italic is the emphasis; never bold, never colour.",
+    "section": "typography"
+   },
+   {
+    "name": "The One Script Rule",
+    "body": "Italianno appears only inside the lockup. It never sets a heading or a button.",
+    "section": "typography"
+   },
+   {
+    "name": "The Paper Doesn't Float Rule",
+    "body": "Cards and photographs sit flat on the page. A shadow means the thing moves.",
+    "section": "elevation"
+   }
+  ],
+  "dos": [
+   "**Do** let a real photograph or film of the food lead each section, at 3px corners.",
+   "**Do** set section headings as one Bodoni sentence that turns italic halfway.",
+   "**Do** rule lists with the 14% ink hairline and put prices in tabular figures.",
+   "**Do** write \"at the counter\" where the shop posts no price, and credit customer photos in a caption or the footer.",
+   "**Do** keep motion slow and liquid on ease-out-expo (cubic-bezier(0.16, 1, 0.3, 1)), and give every animation a finished resting frame for reduced motion."
+  ],
+  "donts": [
+   "**Don't** add a second accent colour; cup red is the only one.",
+   "**Don't** use Italianno outside the lockup.",
+   "**Don't** put shadows on cards or photographs.",
+   "**Don't** use latte-art stock photography or generic \"artisan\" copy; the page shows this shop's case, cups and prices.",
+   "**Don't** round photographs like app tiles; 3px is the print edge."
+  ]
+ }
+}

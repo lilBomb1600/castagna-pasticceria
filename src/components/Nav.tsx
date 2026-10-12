@@ -30,8 +30,17 @@ export function Nav() {
       )}
     >
       <div className="mx-auto flex h-[68px] max-w-[1320px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12">
-        <a href="#top" aria-label="Castagna Pasticceria, back to top" className="w-[118px] text-[25px]">
-          <Lockup tone={solid ? "ink" : "paper"} className="w-full" />
+        {/* the hero already carries the big lockup, so the small one waits until the bar settles onto paper */}
+        <a
+          href="#top"
+          aria-label="Castagna Pasticceria, back to top"
+          tabIndex={solid ? undefined : -1}
+          className={clsx(
+            "w-[118px] text-[25px] transition-[opacity,transform] duration-500 ease-[var(--ease-out-quart)]",
+            solid ? "opacity-100" : "pointer-events-none -translate-y-1 opacity-0"
+          )}
+        >
+          <Lockup className="w-full" />
         </a>
         <nav aria-label="Sections" className="hidden items-center gap-1 md:flex">
           {links.map((l) => (

@@ -1,15 +1,29 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Hanken_Grotesk, Italianno } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { siteUrl } from "@/data/site";
 import "./globals.css";
 
 const display = Bodoni_Moda({ subsets: ["latin"], variable: "--font-bodoni", axes: ["opsz"], style: ["normal", "italic"] });
 const text = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken" });
 const script = Italianno({ subsets: ["latin"], weight: "400", variable: "--font-italianno" });
 
+const description =
+  "An Italian-owned pasticceria on Plaza Way in Lafayette: croissants and bread from the oven in the back, gelato in the case, espresso brought to your table.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Castagna Pasticceria · Gelato, espresso and pastry in Lafayette",
-  description:
-    "An Italian-owned pasticceria on Plaza Way in Lafayette: croissants and bread from the oven in the back, gelato in the case, espresso brought to your table.",
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Castagna Pasticceria",
+    title: "Castagna Pasticceria · Lafayette",
+    description,
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image", title: "Castagna Pasticceria · Lafayette", description },
 };
 
 export const viewport: Viewport = {
@@ -31,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <div hidden dangerouslySetInnerHTML={{ __html: `<!--${CONTRACT}-->` }} />
         {children}
+        <Analytics />
       </body>
     </html>
   );

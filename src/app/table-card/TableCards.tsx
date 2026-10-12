@@ -15,14 +15,14 @@ function Card() {
       </div>
       <div className="grid flex-1 grid-cols-2">
         <div className="flex flex-col items-center justify-center gap-2.5 px-4">
-          <QrCode path="/menu" label="Menu QR code" className="w-[1.45in]" />
+          <QrCode path="/menu/table" label="Menu QR code" className="w-[1.45in]" />
           <p className="display text-[19px] italic leading-none">Scan for the menu</p>
           <p className="text-center text-[10.5px] leading-snug text-ink-2">Point your phone&apos;s camera at the code.</p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2.5 border-l border-dashed border-ink/20 px-4">
-          <QrCode href={shop.review} label="Yelp review QR code" className="w-[1.45in]" />
+          <QrCode href={shop.review} label="Google review QR code" className="w-[1.45in]" />
           <p className="display text-[19px] italic leading-none">Loved it?</p>
-          <p className="text-center text-[10.5px] leading-snug text-ink-2">Scan to leave us a review on Yelp. Grazie!</p>
+          <p className="text-center text-[10.5px] leading-snug text-ink-2">Scan to leave us a review on Google. Grazie!</p>
         </div>
       </div>
     </div>

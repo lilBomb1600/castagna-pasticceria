@@ -10,10 +10,18 @@ import { lockScroll } from "./SmoothScroll";
 import { shop, status } from "@/data/shop";
 
 const FILMS = {
-  wide: { src: "/film/affogato.mp4", poster: "/film/affogato.jpg" },
-  mid: { src: "/film/affogato-960.mp4", poster: "/film/affogato.jpg" },
-  tall: { src: "/film/affogato-phone.mp4", poster: "/film/affogato-phone.jpg" },
+  sharp: { src: "/film/hero-2560.mp4", poster: "/film/hero.jpg" },
+  wide: { src: "/film/hero.mp4", poster: "/film/hero.jpg" },
+  mid: { src: "/film/hero-1280.mp4", poster: "/film/hero.jpg" },
+  tall: { src: "/film/hero-phone.mp4", poster: "/film/hero-phone.jpg" },
 };
+
+/** The smallest film that still looks sharp on this screen. */
+function chooseFilm() {
+  if (window.matchMedia("(max-aspect-ratio: 4/5)").matches) return FILMS.tall;
+  const px = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+  return px > 2200 ? FILMS.sharp : px > 1400 ? FILMS.wide : FILMS.mid;
+}
 
 function OpenNow({ className }: { className?: string }) {
   const [s, setS] = useState<ReturnType<typeof status> | null>(null);
@@ -47,9 +55,7 @@ export function Hero() {
   const started = useRef(performance.now());
 
   useEffect(() => {
-    const tall = window.matchMedia("(max-aspect-ratio: 4/5)").matches;
-    const mid = window.matchMedia("(max-width: 1100px)").matches;
-    setFilm(tall ? FILMS.tall : mid ? FILMS.mid : FILMS.wide);
+    setFilm(chooseFilm());
     if (!window.location.hash) {
       history.scrollRestoration = "manual";
       window.scrollTo(0, 0);
@@ -104,21 +110,24 @@ export function Hero() {
 
   return (
     <section id="top" aria-label="Castagna Pasticceria" className="relative h-[100svh] min-h-[620px] overflow-hidden bg-ink text-white">
-      {film && (
-        <video
-          ref={video}
-          src={film.src}
-          poster={film.poster}
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden
-          onProgress={onProgress}
-          onCanPlayThrough={() => setReady(true)}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      )}
+      <div className="absolute inset-0 tall:bottom-auto tall:h-[62svh]">
+        {film && (
+          <video
+            ref={video}
+            src={film.src}
+            poster={film.poster}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden
+            onProgress={onProgress}
+            onCanPlayThrough={() => setReady(true)}
+            className="h-full w-full object-cover"
+          />
+        )}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[38%] bg-[linear-gradient(180deg,transparent,var(--color-ink))] tall:block" />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgb(20_14_10/.45)_0%,transparent_22%,transparent_48%,rgb(20_14_10/.82)_100%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_60%_at_0%_100%,rgb(20_14_10/.55),transparent_70%)]" />
 
@@ -140,11 +149,11 @@ export function Hero() {
           )}
         >
           <Lockup tone="paper" className="mb-6 w-[min(330px,70vw)] text-[clamp(40px,5.5vw,62px)]" />
-          <h1 className="display max-w-[16ch] text-[clamp(40px,5.6vw,84px)] font-medium leading-[0.95] tracking-[-0.03em] [text-shadow:0_2px_24px_rgb(0_0_0/.35)]">
+          <h1 className="display max-w-[16ch] text-[clamp(34px,5.6vw,84px)] font-medium leading-[0.95] tracking-[-0.03em] [text-shadow:0_2px_24px_rgb(0_0_0/.35)]">
             Pastry from the oven, gelato from the case, <em className="font-normal italic">espresso at your table.</em>
           </h1>
           <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <p className="max-w-[46ch] text-[16.5px] leading-relaxed text-white/88 sm:text-[17.5px]">
+            <p className="max-w-[46ch] text-[16.5px] leading-relaxed text-white/88 max-sm:hidden sm:text-[17.5px]">
               An Italian-owned pasticceria on Plaza Way in Lafayette. Croissants, cookies and bread baked in the back, a case of gelato up front, and espresso brought out to wherever you sit.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-3">

@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* portrait phones: the hero film sits above the headline instead of under it */
+@custom-variant tall {
+  @media (max-aspect-ratio: 4/5) {
+    @slot;
+  }
+}
+
 @theme {
   --color-paper: #f7f2ea;
   --color-paper-2: #efe7db;

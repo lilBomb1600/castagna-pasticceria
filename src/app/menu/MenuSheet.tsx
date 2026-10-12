@@ -6,16 +6,17 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Star } from "lucide-react";
 import { Lockup } from "@/components/Lockup";
-import { menu, menuNote } from "@/data/menu";
+import { menuNote, type Menu } from "@/data/menu";
 import { shop, status } from "@/data/shop";
 
 /**
  * The table menu: what a guest sees after scanning the card. The sheet rises over a photo of the counter, the
  * category chips stay pinned and follow the reading position, and everything is sized for a phone in the sun.
  */
-export function MenuSheet() {
+export function MenuSheet({ menu }: { menu: Menu }) {
+  const { sections } = menu;
   const reduce = useReducedMotion();
-  const [active, setActive] = useState(menu[0].id);
+  const [active, setActive] = useState(sections[0].id);
   const [open, setOpen] = useState<string | null>(null);
   const chips = useRef<HTMLDivElement>(null);
 
@@ -28,9 +29,9 @@ export function MenuSheet() {
       },
       { rootMargin: "-120px 0px -60% 0px" }
     );
-    menu.forEach((m) => io.observe(document.getElementById(m.id)!));
+    sections.forEach((m) => io.observe(document.getElementById(m.id)!));
     return () => io.disconnect();
-  }, []);
+  }, [sections]);
 
   // keep the active chip in view, scrolling the chip row only (never the page)
   useEffect(() => {
@@ -52,6 +53,8 @@ export function MenuSheet() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/photos/counter.jpg" alt="Castagna's counter, pastry case and espresso bar" className="absolute inset-0 h-full w-full object-cover" />
         <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(20_14_10/.55),rgb(20_14_10/.2)_45%,rgb(20_14_10/.7))]" />
+        {/* a local pool of shade so the lockup reads over the busy counter */}
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(48%_42%_at_50%_70%,rgb(20_14_10/.6),transparent_75%)]" />
         <Link href="/" className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-black/40 px-3 py-2 text-[13px] font-semibold text-white backdrop-blur-sm">
           <ArrowLeft size={15} /> Website
         </Link>
@@ -75,7 +78,7 @@ export function MenuSheet() {
 
         <div className="sticky top-0 z-10 mt-6 bg-paper/95 backdrop-blur-md">
           <div ref={chips} className="mx-auto flex max-w-[680px] gap-2 overflow-x-auto px-5 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {menu.map((m) => (
+            {sections.map((m) => (
               <button
                 key={m.id}
                 type="button"
@@ -95,18 +98,20 @@ export function MenuSheet() {
         </div>
 
         <div className="mx-auto max-w-[680px] px-5">
-          {menu.map((m) => (
+          {sections.map((m) => (
             <section key={m.id} id={m.id} className="scroll-mt-20 pt-10">
               <h2 className="display text-[34px] font-medium italic leading-none">{m.title}</h2>
-              <p className="mt-2 text-[15px] text-ink-2">{m.intro}</p>
+              {m.intro && <p className="mt-2 text-[15px] text-ink-2">{m.intro}</p>}
               <ul className="rule mt-4 border-t">
                 {m.items.map((it) => (
                   <li key={it.name} className="rule flex items-baseline justify-between gap-4 border-b py-4">
-                    <span>
-                      <span className="block text-[18px] font-semibold leading-snug">{it.name}</span>
+                    <span className={clsx(it.soldOut && "opacity-55")}>
+                      <span className={clsx("block text-[18px] font-semibold leading-snug", it.soldOut && "line-through decoration-ink-3/60")}>{it.name}</span>
                       {it.note && <span className="mt-0.5 block text-[14.5px] text-ink-2">{it.note}</span>}
                     </span>
-                    {it.price ? (
+                    {it.soldOut ? (
+                      <span className="shrink-0 rounded-full bg-paper-2 px-2.5 py-1 text-[12.5px] font-semibold text-ink-2">Sold out today</span>
+                    ) : it.price ? (
                       <span className="tnum shrink-0 text-[18px] font-semibold">{it.price}</span>
                     ) : (
                       <span className="shrink-0 text-[13.5px] text-ink-3">at the counter</span>
@@ -129,7 +134,7 @@ export function MenuSheet() {
 
           <div className="mt-14 rounded-[22px] bg-cup p-6 text-white">
             <p className="display text-[30px] italic leading-none">Loved it?</p>
-            <p className="mt-2 text-[15.5px] text-white/85">A quick review on Yelp helps a small shop more than you&apos;d think.</p>
+            <p className="mt-2 text-[15.5px] text-white/85">A quick Google review helps a small shop more than you&apos;d think.</p>
             <a href={shop.review} target="_blank" rel="noopener noreferrer" className="btn btn-paper mt-5">
               <Star size={16} /> Write a review <ArrowUpRight size={16} />
             </a>
