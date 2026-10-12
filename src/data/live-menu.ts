@@ -92,7 +92,8 @@ export function menuFromCsv(text: string): Menu | null {
     const title = r[at.section]?.trim();
     const name = r[at.item]?.trim();
     if (!title || !name) continue;
-    const soldOut = at.out >= 0 && marked(r[at.out]);
+    // a mark anywhere from the Sold out column rightward counts: on a phone it easily lands a cell or two over
+    const soldOut = at.out >= 0 && r.slice(at.out).some((c) => marked(c));
     const key = fold(title);
     if (/flavo|gusti/.test(key)) {
       if (!soldOut) flavors.push(name);
