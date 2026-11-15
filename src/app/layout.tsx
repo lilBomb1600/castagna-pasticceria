@@ -1,30 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Hanken_Grotesk, Italianno } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { siteUrl } from "@/data/site";
+import { JsonLd } from "@/components/JsonLd";
+import { HOME_DESCRIPTION, HOME_TITLE } from "@/lib/seo/config";
+import { siteJsonLd } from "@/lib/seo/jsonld";
+import { rootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
 const display = Bodoni_Moda({ subsets: ["latin"], variable: "--font-bodoni", axes: ["opsz"], style: ["normal", "italic"] });
 const text = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken" });
 const script = Italianno({ subsets: ["latin"], weight: "400", variable: "--font-italianno" });
 
-const description =
-  "An Italian-owned pasticceria on Plaza Way in Lafayette: croissants and bread from the oven in the back, gelato in the case, espresso brought to your table.";
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: "Castagna Pasticceria · Gelato, espresso and pastry in Lafayette",
-  description,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: "Castagna Pasticceria",
-    title: "Castagna Pasticceria · Lafayette",
-    description,
-    locale: "en_US",
-  },
-  twitter: { card: "summary_large_image", title: "Castagna Pasticceria · Lafayette", description },
-};
+// Base URL, robots (noindex while it's an unpaid preview), share card: src/lib/seo (LAUNCH-STANDARD.md).
+// The home page sets its own canonical (app/page.tsx).
+export const metadata: Metadata = rootMetadata({ title: HOME_TITLE, description: HOME_DESCRIPTION });
 
 export const viewport: Viewport = {
   themeColor: "#f7f2ea",
@@ -44,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${display.variable} ${text.variable} ${script.variable} antialiased`}>
       <body>
         <div hidden dangerouslySetInnerHTML={{ __html: `<!--${CONTRACT}-->` }} />
+        <JsonLd data={siteJsonLd()} />
         {children}
         <Analytics />
       </body>

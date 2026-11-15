@@ -1,12 +1,13 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { getMenu } from "@/data/live-menu";
 import { MenuSheet } from "./MenuSheet";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Menu · Castagna Pasticceria",
   description: "Today's menu at Castagna Pasticceria, Lafayette: espresso, gelato, pastry, panini and bread.",
-  alternates: { canonical: "/menu" },
-};
+  path: "/menu",
+});
 
 export const viewport: Viewport = {
   themeColor: "#211913",

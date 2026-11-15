@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { pageMetadata, privatePageMetadata } from "@/lib/seo/metadata";
 import { getMenu } from "@/data/live-menu";
 import { MenuSheet } from "../MenuSheet";
 
@@ -7,10 +8,13 @@ import { MenuSheet } from "../MenuSheet";
  * at a table apart from a visit from the website.
  */
 export const metadata: Metadata = {
-  title: "Menu · Castagna Pasticceria",
-  description: "Today's menu at Castagna Pasticceria, Lafayette: espresso, gelato, pastry, panini and bread.",
-  alternates: { canonical: "/menu" },
-  robots: { index: false },
+  ...pageMetadata({
+    title: "Menu · Castagna Pasticceria",
+    description: "Today's menu at Castagna Pasticceria, Lafayette: espresso, gelato, pastry, panini and bread.",
+    path: "/menu",
+  }),
+  // Never indexed, even on the live site: it's the QR scan twin of /menu.
+  ...privatePageMetadata,
 };
 
 export const viewport: Viewport = {
